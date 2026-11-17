@@ -1,0 +1,19 @@
+[Unit]
+Description=Quorum - monitoramento de CPU, memória, disco e serviços
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=300
+StartLimitBurst=10
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/quorum-monitor --servico
+ExecStopPost=/usr/local/bin/quorum-monitor --registrar-parada
+Restart=always
+RestartSec=5
+WatchdogSec=@WATCHDOG@
+NotifyAccess=all
+Nice=5
+
+[Install]
+WantedBy=multi-user.target

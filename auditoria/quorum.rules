@@ -1,0 +1,7 @@
+-w /etc/quorum/ -p wa -k quorum-config
+-w /opt/quorum/app/ -p wa -k quorum-app
+-w /etc/systemd/system/quorum-api.service -p wa -k quorum-servicos
+-w /etc/systemd/system/quorum-monitor.service -p wa -k quorum-servicos
+-w /usr/local/bin/quorum-monitor -p wa -k quorum-servicos
+-w /etc/nginx/sites-available/quorum.conf -p wa -k quorum-config
+-w /etc/sudoers.d/quorum-ops -p wa -k quorum-acesso
