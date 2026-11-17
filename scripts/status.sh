@@ -9,7 +9,7 @@ titulo() { printf '\n%s== %s ==%s\n' "$COR_INFO" "$1" "$COR_FIM"; }
 titulo "Servidor"
 echo "Hostname:   $(hostname)  ($(hostname -f 2>/dev/null || hostname))"
 echo "Sistema:    $(. /etc/os-release && echo "$PRETTY_NAME") | kernel $(uname -r)"
-echo "Ligado em:  $(uptime -s)  ($(uptime -p))"
+echo "Ligado em:  $(inicio_do_sistema)"
 echo "Fuso:       $(date +%Z) $(readlink /etc/localtime | sed 's|.*/zoneinfo/||')"
 
 titulo "Rede e DNS"

@@ -203,7 +203,7 @@ EOF
 
 teste_pos_boot() {
     etapa "Teste: estado após reinicialização"
-    log_info "Sistema ligado desde $(uptime -s)"
+    log_info "Sistema ligado desde $(inicio_do_sistema)"
     local svc todos=sim
     for svc in quorum-rede quorum-api quorum-monitor postgresql nginx; do
         if systemctl is-active --quiet "$svc" && systemctl is-enabled --quiet "$svc"; then
@@ -215,7 +215,7 @@ teste_pos_boot() {
     done
     curl -fsS -m 5 "http://$APP_HOST_PUBLICO/health" >/dev/null || todos=nao
     grep "monitor iniciado" "$LOG_DIR/monitor.log" | tail -n 3
-    resultado pos-boot "$todos" "serviços de pé após boot de $(uptime -s)"
+    resultado pos-boot "$todos" "serviços de pé após boot de $(inicio_do_sistema)"
 }
 
 case "${1:-}" in

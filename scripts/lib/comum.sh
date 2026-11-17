@@ -144,6 +144,8 @@ iniciar_script() {
     log_info "Execução $EXEC_ID iniciada por $(quem_executa)"
 }
 
+inicio_do_sistema() { date -d "$(ps -o lstart= -p 1)" '+%Y-%m-%d %H:%M:%S'; }
+
 eh_wsl() { grep -qi microsoft /proc/version 2>/dev/null; }
 
 interface_padrao() {
