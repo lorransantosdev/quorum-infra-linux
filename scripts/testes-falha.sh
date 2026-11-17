@@ -121,8 +121,13 @@ teste_memoria() {
     etapa "Teste: consumo elevado de memória"
     local marca duracao=$(( ESPERA_MONITOR + 10 ))
     marca="$(linhas_alerta)"
-    log_info "stress-ng alocando 92% da memória disponível por ${duracao}s"
-    stress-ng --vm 1 --vm-bytes 92% --vm-keep --timeout "${duracao}s" --quiet &
+    local total_kb livre_kb alvo_kb
+    total_kb="$(awk '/^MemTotal:/ {print $2}' /proc/meminfo)"
+    livre_kb="$(awk '/^MemAvailable:/ {print $2}' /proc/meminfo)"
+    alvo_kb=$(( total_kb * 90 / 100 - (total_kb - livre_kb) ))
+    (( alvo_kb > livre_kb * 95 / 100 )) && alvo_kb=$(( livre_kb * 95 / 100 ))
+    log_info "stress-ng alocando $(( alvo_kb / 1024 ))MB para levar a memória a ~90% por ${duracao}s"
+    stress-ng --vm 1 --vm-bytes "${alvo_kb}k" --vm-keep --timeout "${duracao}s" --quiet &
     local pid=$!
     if aguardar "$duracao" 'alertas_desde "$marca" | grep -E "(ALERTA|CRITICO) +\| memoria" >/dev/null'; then
         resultado memoria sim "alerta de memória gerado"

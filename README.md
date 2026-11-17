@@ -239,7 +239,7 @@ sudo ./scripts/testes-falha.sh monitor-travado  # kill -STOP no monitor -> watch
 sudo ./scripts/testes-falha.sh api-kill       # kill -9 na API -> systemd religa
 sudo ./scripts/testes-falha.sh api-parada     # systemctl stop na API -> o monitor detecta e religa
 sudo ./scripts/testes-falha.sh cpu            # stress-ng em todos os núcleos -> alerta de CPU
-sudo ./scripts/testes-falha.sh memoria        # stress-ng alocando 92% da RAM -> alerta de memória
+sudo ./scripts/testes-falha.sh memoria        # stress-ng levando a RAM a ~90% -> alerta de memória
 sudo ./scripts/testes-falha.sh disco          # volume de 200 MB lotado -> alerta de disco
 sudo ./scripts/testes-falha.sh script         # configuração inválida e comando com erro -> registrados na auditoria
 sudo ./scripts/testes-falha.sh todos          # todos acima, em sequência
