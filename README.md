@@ -8,10 +8,10 @@ Infraestrutura Linux automatizada em Shell Script para hospedar a API da **Quoru
 
 | Nome | RM |
 |------|----|
-| Lorran ‹sobrenome› | RM ‹preencher› |
-| Pedro ‹sobrenome› | RM ‹preencher› |
-| Fabiano ‹sobrenome› | RM ‹preencher› |
-| Gardim ‹nome completo› | RM ‹preencher› |
+| Lorran dos Santos Sarmento | RM 558982 |
+| Pedro Augusto Martins Certo | RM 556268 |
+| Fabiano Zague | RM 555524 |
+| Vinicius Gardim | RM 556013 |
 
 ## A CitizenTech hospedada
 
