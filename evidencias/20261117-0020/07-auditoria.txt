@@ -1,0 +1,78 @@
+$ tail -n 40 /var/log/quorum/auditoria.log
+2026-11-17T00:08:49-0300 | exec=20261117000556-512 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=03-monitoramento.sh | etapa=fim | resultado=OK | script concluído
+2026-11-17T00:08:49-0300 | exec=20261117000556-512 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=provisionar.sh | etapa=03-monitoramento.sh | resultado=OK | etapa concluída
+2026-11-17T00:08:51-0300 | exec=20261117000556-512 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=provisionar.sh | etapa=fim | resultado=OK | script concluído
+2026-11-17T00:08:51-0300 | exec=20261117000851-13030 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=testes-falha.sh | etapa=inicio | resultado=INICIO | argumentos='todos' conf=/home/aluno/quorum-infra-linux/config/quorum.conf
+2026-11-17T00:08:57-0300 | exec=20261117000851-13030 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=testes-falha.sh | etapa=teste:monitor-kill | resultado=PASSOU | systemd reiniciou o monitor: PID 12792 -> 13081, reinícios 0 -> 1
+2026-11-17T00:10:33-0300 | exec=20261117000851-13030 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=testes-falha.sh | etapa=teste:monitor-travado | resultado=PASSOU | watchdog derrubou o processo congelado e o systemd subiu o PID 13326
+2026-11-17T00:10:36-0300 | exec=20261117000851-13030 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=testes-falha.sh | etapa=teste:api-kill | resultado=PASSOU | API voltou com PID 13392 (reinícios: 0)
+2026-11-17T00:11:03-0300 | exec=20261117000851-13030 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=testes-falha.sh | etapa=teste:api-parada | resultado=PASSOU | monitor detectou e religou a API
+2026-11-17T00:11:25-0300 | exec=20261117000851-13030 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=testes-falha.sh | etapa=teste:cpu | resultado=PASSOU | alerta de CPU gerado
+2026-11-17T00:12:33-0300 | exec=20261117000851-13030 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=testes-falha.sh | etapa=teste:memoria | resultado=PASSOU | alerta de memória gerado
+2026-11-17T00:13:41-0300 | exec=20261117000851-13030 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=testes-falha.sh | etapa=teste:disco | resultado=PASSOU | alerta de disco gerado para /mnt/quorum-teste-disco
+2026-11-17T00:14:04-0300 | exec=20261117000851-13030-falha1 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=01-infraestrutura.sh | etapa=inicio | resultado=INICIO | argumentos='' conf=/tmp/tmp.4tXwc5LZyc
+2026-11-17T00:14:04-0300 | exec=20261117000851-13030-falha1 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=01-infraestrutura.sh | etapa=Validação da configuração | resultado=ERRO | Validar parâmetros de /tmp/tmp.4tXwc5LZyc | codigo=1 | IP_SERVICO inválido: 300.10.0.1/24
+2026-11-17T00:14:04-0300 | exec=20261117000851-13030-falha1 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=01-infraestrutura.sh | etapa=Validação da configuração | resultado=ERRO | linha=214 | execução interrompida pela falha acima
+2026-11-17T00:14:04-0300 | exec=20261117000851-13030-falha1 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=01-infraestrutura.sh | etapa=fim | resultado=ERRO | script encerrado com código 1
+2026-11-17T00:14:04-0300 | exec=20261117000851-13030 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=testes-falha.sh | etapa=teste:script-config | resultado=PASSOU | erro de validação registrado na auditoria
+2026-11-17T00:14:04-0300 | exec=20261117000851-13030-falha2 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=script-com-defeito.sh | etapa=inicio | resultado=INICIO | argumentos='' conf=/home/aluno/quorum-infra-linux/config/quorum.conf
+2026-11-17T00:14:04-0300 | exec=20261117000851-13030-falha2 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=script-com-defeito.sh | etapa=Copiar arquivo inexistente | resultado=ERRO | linha=5 | comando=cp /etc/quorum/arquivo-que-nao-existe.conf /tmp/ | codigo=1
+2026-11-17T00:14:04-0300 | exec=20261117000851-13030-falha2 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=script-com-defeito.sh | etapa=fim | resultado=ERRO | script encerrado com código 1
+2026-11-17T00:14:04-0300 | exec=20261117000851-13030 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=testes-falha.sh | etapa=teste:script-trap | resultado=PASSOU | trap ERR registrou linha, comando e código
+2026-11-17T00:14:05-0300 | exec=20261117000851-13030 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=testes-falha.sh | etapa=fim | resultado=OK | script concluído
+2026-11-17T00:14:36-0300 | exec=20261117001436-617 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=testes-falha.sh | etapa=inicio | resultado=INICIO | argumentos='pos-boot' conf=/home/aluno/quorum-infra-linux/config/quorum.conf
+2026-11-17T00:14:36-0300 | exec=20261117001436-617 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=testes-falha.sh | etapa=teste:pos-boot | resultado=PASSOU | serviços de pé após boot de 2026-11-17 00:14:08
+2026-11-17T00:14:36-0300 | exec=20261117001436-617 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=testes-falha.sh | etapa=fim | resultado=OK | script concluído
+2026-11-17T00:20:13-0300 | exec=20261117002013-1160 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=provisionar.sh | etapa=inicio | resultado=INICIO | argumentos='--app' conf=/home/aluno/quorum-infra-linux/config/quorum.conf
+2026-11-17T00:20:13-0300 | exec=20261117002013-1160 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=02-aplicacao.sh | etapa=inicio | resultado=INICIO | argumentos='' conf=/home/aluno/quorum-infra-linux/config/quorum.conf
+2026-11-17T00:20:21-0300 | exec=20261117002013-1160 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=02-aplicacao.sh | etapa=Dependências do sistema | resultado=OK | Instalar pacotes: python3 python3-venv python3-pip postgresql postgresql-contrib nginx git rsync jq openssl stress-ng sysstat logrotate acl
+2026-11-17T00:20:22-0300 | exec=20261117002013-1160 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=02-aplicacao.sh | etapa=Banco de dados | resultado=OK | Iniciar PostgreSQL
+2026-11-17T00:20:22-0300 | exec=20261117002013-1160 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=02-aplicacao.sh | etapa=Banco de dados | resultado=OK | Criar usuário e banco quorum
+2026-11-17T00:20:22-0300 | exec=20261117002013-1160 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=02-aplicacao.sh | etapa=Variáveis de ambiente | resultado=OK | Gravar /etc/quorum/quorum.env (640, root:quorum)
+2026-11-17T00:20:23-0300 | exec=20261117002013-1160 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=02-aplicacao.sh | etapa=Código da aplicação | resultado=OK | Baixar código de https://github.com/lorransantosdev/quorum-api.git (main)
+2026-11-17T00:20:25-0300 | exec=20261117002013-1160 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=02-aplicacao.sh | etapa=Código da aplicação | resultado=OK | Criar venv e instalar dependências Python
+2026-11-17T00:20:26-0300 | exec=20261117002013-1160 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=02-aplicacao.sh | etapa=Migrações | resultado=OK | Aplicar migrações Alembic
+2026-11-17T00:20:26-0300 | exec=20261117002013-1160 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=02-aplicacao.sh | etapa=Serviço da aplicação | resultado=OK | Instalar e iniciar quorum-api.service
+2026-11-17T00:20:27-0300 | exec=20261117002013-1160 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=02-aplicacao.sh | etapa=Serviço da aplicação | resultado=OK | Publicar API no nginx (api.quorum.local:80)
+2026-11-17T00:20:29-0300 | exec=20261117002013-1160 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=02-aplicacao.sh | etapa=Verificação | resultado=OK | Checar http://api.quorum.local/health
+2026-11-17T00:20:29-0300 | exec=20261117002013-1160 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=02-aplicacao.sh | etapa=fim | resultado=OK | script concluído
+2026-11-17T00:20:29-0300 | exec=20261117002013-1160 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=provisionar.sh | etapa=02-aplicacao.sh | resultado=OK | etapa concluída
+2026-11-17T00:20:32-0300 | exec=20261117002013-1160 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=provisionar.sh | etapa=fim | resultado=OK | script concluído
+2026-11-17T00:20:32-0300 | exec=20261117002032-2347 | host=quorum-srv01 | usuario=root(sudo:aluno) | script=coletar-evidencias.sh | etapa=inicio | resultado=INICIO | argumentos='' conf=/home/aluno/quorum-infra-linux/config/quorum.conf
+
+$ tail -n 20 /var/log/quorum/instalacoes.log
+2026-11-17T00:08:06-0300 | exec=20261117000556-512 | pacote=openssl | versao=3.0.13-0ubuntu3.16
+2026-11-17T00:08:06-0300 | exec=20261117000556-512 | pacote=stress-ng | versao=0.17.06-1build1
+2026-11-17T00:08:06-0300 | exec=20261117000556-512 | pacote=sysstat | versao=12.6.1-2
+2026-11-17T00:08:06-0300 | exec=20261117000556-512 | pacote=logrotate | versao=3.21.0-2build1
+2026-11-17T00:08:06-0300 | exec=20261117000556-512 | pacote=acl | versao=2.3.2-1build1.1
+2026-11-17T00:08:49-0300 | exec=20261117000556-512 | pacote=logrotate | versao=3.21.0-2build1
+2026-11-17T00:20:21-0300 | exec=20261117002013-1160 | pacote=python3 | versao=3.12.3-0ubuntu2.1
+2026-11-17T00:20:21-0300 | exec=20261117002013-1160 | pacote=python3-venv | versao=3.12.3-0ubuntu2.1
+2026-11-17T00:20:21-0300 | exec=20261117002013-1160 | pacote=python3-pip | versao=24.0+dfsg-1ubuntu1.3
+2026-11-17T00:20:21-0300 | exec=20261117002013-1160 | pacote=postgresql | versao=16+257build1.1
+2026-11-17T00:20:21-0300 | exec=20261117002013-1160 | pacote=postgresql-contrib | versao=16+257build1.1
+2026-11-17T00:20:21-0300 | exec=20261117002013-1160 | pacote=nginx | versao=1.24.0-2ubuntu7.19
+2026-11-17T00:20:21-0300 | exec=20261117002013-1160 | pacote=git | versao=1:2.43.0-1ubuntu7.4
+2026-11-17T00:20:21-0300 | exec=20261117002013-1160 | pacote=rsync | versao=3.2.7-1ubuntu1.5
+2026-11-17T00:20:21-0300 | exec=20261117002013-1160 | pacote=jq | versao=1.7.1-3ubuntu0.24.04.2
+2026-11-17T00:20:21-0300 | exec=20261117002013-1160 | pacote=openssl | versao=3.0.13-0ubuntu3.16
+2026-11-17T00:20:21-0300 | exec=20261117002013-1160 | pacote=stress-ng | versao=0.17.06-1build1
+2026-11-17T00:20:21-0300 | exec=20261117002013-1160 | pacote=sysstat | versao=12.6.1-2
+2026-11-17T00:20:21-0300 | exec=20261117002013-1160 | pacote=logrotate | versao=3.21.0-2build1
+2026-11-17T00:20:21-0300 | exec=20261117002013-1160 | pacote=acl | versao=2.3.2-1build1.1
+
+$ tail -n 20 /var/log/quorum/testes-falha.log
+2026-11-17T00:08:57-0300 | PASSOU     | monitor-kill | systemd reiniciou o monitor: PID 12792 -> 13081, reinícios 0 -> 1
+2026-11-17T00:10:33-0300 | PASSOU     | monitor-travado | watchdog derrubou o processo congelado e o systemd subiu o PID 13326
+2026-11-17T00:10:36-0300 | PASSOU     | api-kill | API voltou com PID 13392 (reinícios: 0)
+2026-11-17T00:11:03-0300 | PASSOU     | api-parada | monitor detectou e religou a API
+2026-11-17T00:11:25-0300 | PASSOU     | cpu | alerta de CPU gerado
+2026-11-17T00:12:33-0300 | PASSOU     | memoria | alerta de memória gerado
+2026-11-17T00:13:42-0300 | PASSOU     | disco | alerta de disco gerado para /mnt/quorum-teste-disco
+2026-11-17T00:14:04-0300 | PASSOU     | script-config | erro de validação registrado na auditoria
+2026-11-17T00:14:05-0300 | PASSOU     | script-trap | trap ERR registrou linha, comando e código
+2026-11-17T00:14:36-0300 | PASSOU     | pos-boot | serviços de pé após boot de 2026-11-17 00:14:08
+
+$ ausearch -k quorum-config -i 2>/dev/null | tail -n 20 || echo 'auditd indisponível neste kernel'
+

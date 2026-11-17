@@ -272,17 +272,25 @@ As saídas reais dos comandos ficam em [`evidencias/`](evidencias/), geradas com
 sudo ./scripts/coletar-evidencias.sh
 ```
 
-| Evidência | Arquivo |
-|-----------|---------|
-| Provisionamento completo | [`evidencias/provisionamento.txt`](evidencias/provisionamento.txt) |
-| Hostname, rede e DNS | `evidencias/<data>/01-hostname.txt`, `02-rede-dns.txt` |
-| Usuários e permissões | `evidencias/<data>/03-usuarios-permissoes.txt` |
-| Serviços systemd | `evidencias/<data>/04-servicos.txt` |
-| Aplicação respondendo | `evidencias/<data>/05-aplicacao.txt` |
-| Monitoramento e alertas | `evidencias/<data>/06-monitoramento.txt` |
-| Auditoria e testes de falha | `evidencias/<data>/07-auditoria.txt`, [`evidencias/testes-falha.txt`](evidencias/testes-falha.txt) |
-| Pós-reinicialização | [`evidencias/pos-boot.txt`](evidencias/pos-boot.txt) |
-| Capturas de tela | [`evidencias/prints/`](evidencias/prints/) |
+Todas as evidências abaixo vieram de uma única execução do zero: Ubuntu 24.04 recém-instalado no WSL2, `git clone` deste repositório e `sudo ./provisionar.sh` (a API foi clonada direto do GitHub pelo script).
+
+| Evidência | Texto | Print |
+|-----------|-------|-------|
+| Provisionamento completo (206 s, sem intervenção) | [`provisionamento.txt`](evidencias/provisionamento.txt) | [01-provisionamento.png](evidencias/prints/01-provisionamento.png) |
+| Painel do servidor | [`status.txt`](evidencias/status.txt) | [02-status.png](evidencias/prints/02-status.png) |
+| Testes de falha (9 de 9 aprovados) | [`testes-falha.txt`](evidencias/testes-falha.txt) | [03-testes-falha.png](evidencias/prints/03-testes-falha.png) |
+| Pós-reinicialização | [`pos-boot.txt`](evidencias/pos-boot.txt) | [04-pos-boot.png](evidencias/prints/04-pos-boot.png) |
+| Monitoramento e alertas | [`06-monitoramento.txt`](evidencias/20261117-0020/06-monitoramento.txt) | [05-monitoramento-alertas.png](evidencias/prints/05-monitoramento-alertas.png) |
+| Auditoria | [`07-auditoria.txt`](evidencias/20261117-0020/07-auditoria.txt) | [06-auditoria.png](evidencias/prints/06-auditoria.png) |
+| Serviços systemd | [`04-servicos.txt`](evidencias/20261117-0020/04-servicos.txt) | [07-servicos-systemd.png](evidencias/prints/07-servicos-systemd.png) |
+| Hostname, rede e DNS | [`01-hostname.txt`](evidencias/20261117-0020/01-hostname.txt), [`02-rede-dns.txt`](evidencias/20261117-0020/02-rede-dns.txt) | [08-hostname-rede-dns.png](evidencias/prints/08-hostname-rede-dns.png) |
+| Usuários e permissões | [`03-usuarios-permissoes.txt`](evidencias/20261117-0020/03-usuarios-permissoes.txt) | [09-usuarios-permissoes.png](evidencias/prints/09-usuarios-permissoes.png) |
+| Aplicação respondendo | [`05-aplicacao.txt`](evidencias/20261117-0020/05-aplicacao.txt) | prints do Swagger no [repositório da API](https://github.com/lorransantosdev/quorum-api/tree/main/docs/evidencias) |
+| Atualização da aplicação (`git fetch` + migrações + restart) | [`atualizacao-app.txt`](evidencias/atualizacao-app.txt) | |
+
+![Testes de falha](evidencias/prints/03-testes-falha.png)
+
+> No WSL a distro é desligada pelo Windows quando não há nenhum terminal aberto nela. Para a API continuar no ar, mantenha uma janela do Ubuntu aberta. Se `http://localhost` não abrir no navegador do Windows, use o IP da `eth0` mostrado pelo `./scripts/status.sh`.
 
 ## Roteiro do vídeo (até 7 min)
 

@@ -1,0 +1,14 @@
+2026-11-17T00:14:36-0300 [INFO] [testes-falha.sh] Execução 20261117001436-617 iniciada por root(sudo:aluno)
+2026-11-17T00:14:36-0300 [INFO] [testes-falha.sh] ==> Teste: estado após reinicialização
+2026-11-17T00:14:36-0300 [INFO] [testes-falha.sh] Sistema ligado desde 2026-11-17 00:14:08
+2026-11-17T00:14:36-0300 [OK] [testes-falha.sh] quorum-rede ativo e habilitado no boot
+2026-11-17T00:14:36-0300 [OK] [testes-falha.sh] quorum-api ativo e habilitado no boot
+2026-11-17T00:14:36-0300 [OK] [testes-falha.sh] quorum-monitor ativo e habilitado no boot
+2026-11-17T00:14:36-0300 [OK] [testes-falha.sh] postgresql ativo e habilitado no boot
+2026-11-17T00:14:36-0300 [OK] [testes-falha.sh] nginx ativo e habilitado no boot
+2026-11-17T00:08:56-0300 | INFO     | monitor      | monitor iniciado pid=13081 intervalo=20s boot=2026-11-17 00:05:44
+2026-11-17T00:10:32-0300 | INFO     | monitor      | monitor iniciado pid=13326 intervalo=20s boot=2026-11-17 00:05:44
+2026-11-17T00:14:15-0300 | INFO     | monitor      | monitor iniciado pid=267 intervalo=20s boot=2026-11-17 00:14:08
+2026-11-17T00:14:36-0300 [OK] [testes-falha.sh] [PASSOU] pos-boot: serviços de pé após boot de 2026-11-17 00:14:08
+2026-11-17T00:14:36-0300 [INFO] [testes-falha.sh] ==> Resultado
+2026-11-17T00:14:36-0300 [INFO] [testes-falha.sh] Aprovados: 1 | Não aprovados: 0 | detalhes em /var/log/quorum/testes-falha.log

@@ -1,0 +1,79 @@
+$ systemctl status quorum-rede quorum-api quorum-monitor postgresql nginx --no-pager -n 0
+● quorum-rede.service - Quorum - IP de serviço 10.77.0.10/24 em eth0
+     Loaded: loaded (/etc/systemd/system/quorum-rede.service; enabled; preset: enabled)
+     Active: active (exited) since Tue 2026-11-17 00:16:15 -03; 4min 19s ago
+   Main PID: 232 (code=exited, status=0/SUCCESS)
+        CPU: 14ms
+
+● quorum-api.service - Quorum - API da usina virtual (FastAPI/uvicorn)
+     Loaded: loaded (/etc/systemd/system/quorum-api.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-17 00:20:26 -03; 7s ago
+       Docs: http://api.quorum.local/docs
+   Main PID: 1973 (uvicorn)
+      Tasks: 6 (limit: 14154)
+     Memory: 63.1M (peak: 63.6M)
+        CPU: 1.443s
+     CGroup: /system.slice/quorum-api.service
+             └─1973 /opt/quorum/venv/bin/python3 /opt/quorum/venv/bin/uvicorn main:app --host 127.0.0.1 --port 8000 --proxy-headers
+
+● quorum-monitor.service - Quorum - monitoramento de CPU, memória, disco e serviços
+     Loaded: loaded (/etc/systemd/system/quorum-monitor.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-17 00:16:15 -03; 4min 19s ago
+   Main PID: 238 (bash)
+      Tasks: 2 (limit: 14154)
+     Memory: 4.9M (peak: 10.9M)
+        CPU: 2.309s
+     CGroup: /system.slice/quorum-monitor.service
+             ├─ 238 bash /usr/local/bin/quorum-monitor --servico
+             └─2020 sleep 20
+
+● postgresql.service - PostgreSQL RDBMS
+     Loaded: loaded (/usr/lib/systemd/system/postgresql.service; enabled; preset: enabled)
+     Active: active (exited) since Tue 2026-11-17 00:16:18 -03; 4min 15s ago
+   Main PID: 420 (code=exited, status=0/SUCCESS)
+        CPU: 4ms
+
+● nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/usr/lib/systemd/system/nginx.service; enabled; preset: enabled)
+     Active: active (running) since Tue 2026-11-17 00:16:15 -03; 4min 18s ago
+       Docs: man:nginx(8)
+    Process: 2145 ExecReload=/usr/sbin/nginx -g daemon on; master_process on; -s reload (code=exited, status=0/SUCCESS)
+   Main PID: 270 (nginx)
+      Tasks: 13 (limit: 14154)
+     Memory: 10.8M (peak: 21.3M swap: 24.0K swap peak: 56.0K)
+        CPU: 254ms
+     CGroup: /system.slice/nginx.service
+             ├─ 270 "nginx: master process /usr/sbin/nginx -g daemon on; master_process on;"
+             ├─2146 "nginx: worker process"
+             ├─2148 "nginx: worker process"
+             ├─2149 "nginx: worker process"
+             ├─2150 "nginx: worker process"
+             ├─2151 "nginx: worker process"
+             ├─2152 "nginx: worker process"
+             ├─2153 "nginx: worker process"
+             ├─2155 "nginx: worker process"
+             ├─2156 "nginx: worker process"
+             ├─2157 "nginx: worker process"
+             ├─2159 "nginx: worker process"
+             └─2160 "nginx: worker process"
+
+$ systemctl list-unit-files 'quorum-*' --no-pager
+UNIT FILE              STATE   PRESET
+quorum-api.service     enabled enabled
+quorum-monitor.service enabled enabled
+quorum-rede.service    enabled enabled
+
+3 unit files listed.
+
+$ systemctl show quorum-monitor -p Restart -p RestartUSec -p WatchdogUSec -p NRestarts
+Restart=always
+RestartUSec=5s
+WatchdogUSec=1min 30s
+NRestarts=0
+
+$ systemctl show quorum-api -p Restart -p RestartUSec -p NRestarts -p User
+Restart=always
+RestartUSec=3s
+NRestarts=0
+User=quorum
+

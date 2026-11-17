@@ -1,0 +1,33 @@
+$ curl -s http://api.quorum.local/health
+{"status":"ok","banco":"ok"}
+$ curl -s 'http://api.quorum.local/clientes?tamanho=3'
+{"itens":[{"id":1,"nome":"Mercado Bom Preço – Vila Mariana","segmento":"SUPERMERCADO","cnpj":"00.000.000/0001-01","bairro":"Vila Mariana","demanda_contratada_kw":300.0,"participa_hoje":true},{"id":2,"nome":"Academia Movimento – Tatuapé","segmento":"ACADEMIA","cnpj":"00.000.000/0001-02","bairro":"Tatuapé","demanda_contratada_kw":150.0,"participa_hoje":true},{"id":3,"nome":"Clínica Vida – Lapa","segmento":"CLINICA","cnpj":"00.000.000/0001-03","bairro":"Lapa","demanda_contratada_kw":120.0,"participa_hoje":true}],"total":5,"pagina":1,"tamanho":3}
+$ curl -s -o /dev/null -w 'GET /docs -> HTTP %{http_code}\n' http://api.quorum.local/docs
+GET /docs -> HTTP 200
+
+$ curl -s http://api.quorum.local/openapi.json | jq -r '.paths | keys[]'
+/clientes
+/clientes/{cliente_id}
+/clientes/{cliente_id}/equipamentos
+/clientes/{cliente_id}/flexibilidade
+/clientes/{cliente_id}/medicoes
+/clientes/{cliente_id}/participacao
+/despachos
+/despachos/{despacho_id}
+/equipamentos/{equipamento_id}
+/health
+/medicoes/ultrapassagens
+
+$ runuser -u quorum -- bash -c 'set -a; . /etc/quorum/quorum.env; cd /opt/quorum/app && /opt/quorum/venv/bin/alembic history'
+0003 -> 0004 (head), adiciona participa_hoje e bairro no cliente
+0002 -> 0003, cria despacho e acionamento
+0001 -> 0002, carrega clientes simulados de Sao Paulo
+<base> -> 0001, cria cliente, equipamento e medicao
+
+$ tail -n 5 /var/log/quorum/api.log
+INFO:     10.77.0.10:0 - "GET /medicoes/ultrapassagens?de=2026-11-18T00:00:00-03:00&ate=2026-11-19T00:00:00-03:00 HTTP/1.0" 200 OK
+INFO:     10.77.0.10:0 - "GET /health HTTP/1.0" 200 OK
+INFO:     10.77.0.10:0 - "GET /clientes?tamanho=3 HTTP/1.0" 200 OK
+INFO:     10.77.0.10:0 - "GET /docs HTTP/1.0" 200 OK
+INFO:     10.77.0.10:0 - "GET /openapi.json HTTP/1.0" 200 OK
+

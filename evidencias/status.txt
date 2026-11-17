@@ -1,0 +1,36 @@
+
+== Servidor ==
+Hostname:   quorum-srv01  (quorum-srv01.quorum.local)
+Sistema:    Ubuntu 24.04 LTS | kernel 6.6.87.2-microsoft-standard-WSL2
+Ligado em:  2026-11-17 00:05:44
+Fuso:       -03 America/Sao_Paulo
+
+== Rede e DNS ==
+eth0             UP             172.19.249.236/20 10.77.0.10/24 
+Rota padrão: default via 172.19.240.1 dev eth0 proto kernel 
+nameserver 10.255.255.254
+search tail0b910c.ts.net lan
+api.quorum.local         -> 10.77.0.10
+quorum-srv01.quorum.local -> 127.0.1.1
+db.quorum.local          -> 127.0.0.1
+
+== Serviços ==
+quorum-rede      ativo=active    boot=enabled   reinícios=0
+quorum-api       ativo=active    boot=enabled   reinícios=0
+quorum-monitor   ativo=active    boot=enabled   reinícios=2
+postgresql       ativo=active    boot=enabled   reinícios=0
+nginx            ativo=active    boot=enabled   reinícios=0
+
+== API ==
+GET http://api.quorum.local/health -> HTTP 200 em 0.038476s
+{"status":"ok","banco":"ok"}
+
+== Recursos agora ==
+2026-11-17T00:14:08-0300 NORMAL :: CPU 2% [NORMAL] | Memória 10% [NORMAL] | Disco /=1% | API ok
+
+== Últimos alertas ==
+2026-11-17T00:12:10-0300 | NORMAL   | cpu          | uso voltou ao normal: 1%
+2026-11-17T00:12:33-0300 | ALERTA   | memoria      | uso 86% (limite alerta 80% / crítico 95%) 10224MB de 11805MB top: stress-ng-vm(pid 13915 cpu 99.8% mem 75.7%) uvicorn(pid 13575 cpu 1.6% mem 0.7%) postgres(pid 11829 cpu 0.0% mem 0.2%) 
+2026-11-17T00:13:19-0300 | NORMAL   | memoria      | uso voltou ao normal: 10%
+2026-11-17T00:13:41-0300 | CRITICO  | disco:/mnt/quorum-teste-disco | uso 96% (limite alerta 80% / crítico 90%) 
+2026-11-17T00:14:03-0300 | NORMAL   | disco:/mnt/quorum-teste-disco | ponto de montagem removido

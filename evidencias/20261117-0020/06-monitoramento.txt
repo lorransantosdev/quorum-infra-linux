@@ -1,0 +1,59 @@
+$ /usr/local/bin/quorum-monitor --uma-vez; echo "codigo de saida: $?"
+2026-11-17T00:20:36-0300 NORMAL :: CPU 0% [NORMAL] | Memória 10% [NORMAL] | Disco /=1% | API ok
+codigo de saida: 0
+
+$ tail -n 15 /var/log/quorum/monitor.log
+2026-11-17T00:16:21-0300 | NORMAL   | ciclo#1      | cpu=17% mem=9% (1154/11805MB) disco: /=1% api=ok
+2026-11-17T00:16:44-0300 | NORMAL   | ciclo#2      | cpu=0% mem=9% (1165/11805MB) disco: /=1% api=ok
+2026-11-17T00:17:06-0300 | NORMAL   | ciclo#3      | cpu=0% mem=9% (1175/11805MB) disco: /=1% api=ok
+2026-11-17T00:17:28-0300 | NORMAL   | ciclo#4      | cpu=2% mem=9% (1160/11805MB) disco: /=1% api=ok
+2026-11-17T00:17:50-0300 | NORMAL   | ciclo#5      | cpu=0% mem=9% (1164/11805MB) disco: /=1% api=ok
+2026-11-17T00:18:13-0300 | NORMAL   | ciclo#6      | cpu=0% mem=9% (1177/11805MB) disco: /=1% api=ok
+2026-11-17T00:18:35-0300 | NORMAL   | ciclo#7      | cpu=0% mem=9% (1173/11805MB) disco: /=1% api=ok
+2026-11-17T00:18:57-0300 | NORMAL   | ciclo#8      | cpu=2% mem=9% (1167/11805MB) disco: /=1% api=ok
+2026-11-17T00:19:20-0300 | NORMAL   | ciclo#9      | cpu=0% mem=9% (1172/11805MB) disco: /=1% api=ok
+2026-11-17T00:19:42-0300 | NORMAL   | ciclo#10     | cpu=1% mem=9% (1159/11805MB) disco: /=1% api=ok
+2026-11-17T00:20:04-0300 | NORMAL   | ciclo#11     | cpu=13% mem=9% (1173/11805MB) disco: /=1% api=ok
+2026-11-17T00:20:26-0300 | FALHA    | api:saude    | falha 1/3 em http://api.quorum.local/health: curl: (22) The requested URL returned error: 502
+2026-11-17T00:20:26-0300 | NORMAL   | ciclo#12     | cpu=9% mem=10% (1189/11805MB) disco: /=1% api=falha
+2026-11-17T00:20:32-0300 | NORMAL   | ciclo#1      | cpu=1% mem=10% (1191/11805MB) disco: /=1% api=ok
+2026-11-17T00:20:36-0300 | NORMAL   | ciclo#1      | cpu=0% mem=10% (1184/11805MB) disco: /=1% api=ok
+
+$ tail -n 25 /var/log/quorum/alertas.log
+2026-11-17T00:08:51-0300 | FALHA    | monitor      | serviço de monitoramento interrompido: resultado=signal codigo=killed status=KILL (systemd vai reiniciar)
+2026-11-17T00:10:27-0300 | FALHA    | monitor      | serviço de monitoramento interrompido: resultado=watchdog codigo=killed status=ABRT (systemd vai reiniciar)
+2026-11-17T00:10:34-0300 | FALHA    | svc:quorum-api | serviço activating
+2026-11-17T00:10:37-0300 | FALHA    | svc:quorum-api | reinício pelo monitor não resolveu
+2026-11-17T00:10:37-0300 | FALHA    | api:saude    | falha 1/3 em http://api.quorum.local/health: curl: (22) The requested URL returned error: 502
+2026-11-17T00:11:00-0300 | FALHA    | svc:quorum-api | serviço inactive
+2026-11-17T00:11:03-0300 | RECUPERADO | svc:quorum-api | serviço reiniciado pelo monitor
+2026-11-17T00:11:03-0300 | RECUPERADO | api:saude    | API respondendo novamente: {"status":"ok","banco":"ok"}
+2026-11-17T00:11:25-0300 | CRITICO  | cpu          | uso 100% (limite alerta 80% / crítico 95%) load=3.58 1.42 1.09 top: stress-ng-cpu(pid 13654 cpu 99.5% mem 0.0%) stress-ng-cpu(pid 13655 cpu 99.5% mem 0.0%) stress-ng-cpu(pid 13649 cpu 99.5% mem 0.0%) 
+2026-11-17T00:12:10-0300 | NORMAL   | cpu          | uso voltou ao normal: 1%
+2026-11-17T00:12:33-0300 | ALERTA   | memoria      | uso 86% (limite alerta 80% / crítico 95%) 10224MB de 11805MB top: stress-ng-vm(pid 13915 cpu 99.8% mem 75.7%) uvicorn(pid 13575 cpu 1.6% mem 0.7%) postgres(pid 11829 cpu 0.0% mem 0.2%) 
+2026-11-17T00:13:19-0300 | NORMAL   | memoria      | uso voltou ao normal: 10%
+2026-11-17T00:13:41-0300 | CRITICO  | disco:/mnt/quorum-teste-disco | uso 96% (limite alerta 80% / crítico 90%) 
+2026-11-17T00:14:03-0300 | NORMAL   | disco:/mnt/quorum-teste-disco | ponto de montagem removido
+2026-11-17T00:14:17-0300 | FALHA    | svc:quorum-api | serviço inactive
+2026-11-17T00:14:22-0300 | RECUPERADO | svc:quorum-api | serviço reiniciado pelo monitor
+2026-11-17T00:16:17-0300 | FALHA    | svc:quorum-api | serviço inactive
+2026-11-17T00:16:21-0300 | RECUPERADO | svc:quorum-api | serviço reiniciado pelo monitor
+2026-11-17T00:20:26-0300 | FALHA    | api:saude    | falha 1/3 em http://api.quorum.local/health: curl: (22) The requested URL returned error: 502
+
+$ journalctl -t quorum-monitor -n 15 --no-pager -o short-iso
+2026-11-17T00:11:03-03:00 quorum-srv01 quorum-monitor[13596]: RECUPERADO svc:quorum-api: serviço reiniciado pelo monitor
+2026-11-17T00:11:03-03:00 quorum-srv01 quorum-monitor[13608]: RECUPERADO api:saude: API respondendo novamente: {"status":"ok","banco":"ok"}
+2026-11-17T00:11:25-03:00 quorum-srv01 quorum-monitor[13751]: CRITICO cpu: uso 100% (limite alerta 80% / crítico 95%) load=3.58 1.42 1.09 top: stress-ng-cpu(pid 13654 cpu 99.5% mem 0.0%) stress-ng-cpu(pid 13655 cpu 99.5% mem 0.0%) stress-ng-cpu(pid 13649 cpu 99.5% mem 0.0%)
+2026-11-17T00:12:10-03:00 quorum-srv01 quorum-monitor[13864]: NORMAL cpu: uso voltou ao normal: 1%
+2026-11-17T00:12:33-03:00 quorum-srv01 quorum-monitor[14017]: ALERTA memoria: uso 86% (limite alerta 80% / crítico 95%) 10224MB de 11805MB top: stress-ng-vm(pid 13915 cpu 99.8% mem 75.7%) uvicorn(pid 13575 cpu 1.6% mem 0.7%) postgres(pid 11829 cpu 0.0% mem 0.2%)
+2026-11-17T00:13:19-03:00 quorum-srv01 quorum-monitor[14135]: NORMAL memoria: uso voltou ao normal: 10%
+2026-11-17T00:13:41-03:00 quorum-srv01 quorum-monitor[14297]: CRITICO disco:/mnt/quorum-teste-disco: uso 96% (limite alerta 80% / crítico 90%)
+2026-11-17T00:14:03-03:00 quorum-srv01 quorum-monitor[14441]: NORMAL disco:/mnt/quorum-teste-disco: ponto de montagem removido
+2026-11-17T00:14:15-03:00 quorum-srv01 quorum-monitor[292]: monitor iniciado pid=267
+2026-11-17T00:14:17-03:00 quorum-srv01 quorum-monitor[426]: FALHA svc:quorum-api: serviço inactive
+2026-11-17T00:14:22-03:00 quorum-srv01 quorum-monitor[600]: RECUPERADO svc:quorum-api: serviço reiniciado pelo monitor
+2026-11-17T00:16:15-03:00 quorum-srv01 quorum-monitor[261]: monitor iniciado pid=238
+2026-11-17T00:16:17-03:00 quorum-srv01 quorum-monitor[396]: FALHA svc:quorum-api: serviço inactive
+2026-11-17T00:16:21-03:00 quorum-srv01 quorum-monitor[565]: RECUPERADO svc:quorum-api: serviço reiniciado pelo monitor
+2026-11-17T00:20:26-03:00 quorum-srv01 quorum-monitor[2014]: FALHA api:saude: falha 1/3 em http://api.quorum.local/health: curl: (22) The requested URL returned error: 502
+

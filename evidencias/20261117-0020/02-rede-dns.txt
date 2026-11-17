@@ -1,0 +1,67 @@
+$ ip -4 -brief addr show
+lo               UNKNOWN        127.0.0.1/8 10.255.255.254/32 
+eth0             UP             172.19.249.236/20 10.77.0.10/24 
+
+$ ip -4 route show
+default via 172.19.240.1 dev eth0 proto kernel 
+10.77.0.0/24 dev eth0 proto kernel scope link src 10.77.0.10 
+172.19.240.0/20 dev eth0 proto kernel scope link src 172.19.249.236 
+
+$ cat /etc/resolv.conf
+# This is /run/systemd/resolve/stub-resolv.conf managed by man:systemd-resolved(8).
+# Do not edit.
+#
+# This file might be symlinked as /etc/resolv.conf. If you're looking at
+# /etc/resolv.conf and seeing this text, you have followed the symlink.
+#
+# This is a dynamic resolv.conf file for connecting local clients to the
+# internal DNS stub resolver of systemd-resolved. This file lists all
+# configured search domains.
+#
+# Run "resolvectl status" to see details about the uplink DNS servers
+# currently in use.
+#
+# Third party programs should typically not access this file directly, but only
+# through the symlink at /etc/resolv.conf. To manage man:resolv.conf(5) in a
+# different way, replace this symlink by a static file or a different symlink.
+#
+# See man:systemd-resolved.service(8) for details about the supported modes of
+# operation for /etc/resolv.conf.
+
+nameserver 127.0.0.53
+options edns0 trust-ad
+search quorum.local
+
+$ cat /etc/netplan/60-quorum.yaml 2>/dev/null || systemctl cat quorum-rede.service
+# /etc/systemd/system/quorum-rede.service
+[Unit]
+Description=Quorum - IP de serviço 10.77.0.10/24 em eth0
+After=network.target
+Before=quorum-api.service nginx.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/ip addr replace 10.77.0.10/24 dev eth0 label eth0:quorum
+ExecStop=/usr/sbin/ip addr del 10.77.0.10/24 dev eth0
+
+[Install]
+WantedBy=multi-user.target
+
+$ getent hosts api.quorum.local quorum-srv01.quorum.local db.quorum.local
+10.77.0.10      api.quorum.local
+127.0.1.1       quorum-srv01.quorum.local quorum-srv01
+127.0.0.1       db.quorum.local
+
+$ dig +short github.com
+4.228.31.150
+
+$ ping -c 2 -W 2 api.quorum.local
+PING api.quorum.local (10.77.0.10) 56(84) bytes of data.
+64 bytes from api.quorum.local (10.77.0.10): icmp_seq=1 ttl=64 time=1.78 ms
+64 bytes from api.quorum.local (10.77.0.10): icmp_seq=2 ttl=64 time=0.125 ms
+
+--- api.quorum.local ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1012ms
+rtt min/avg/max/mdev = 0.125/0.950/1.776/0.825 ms
+

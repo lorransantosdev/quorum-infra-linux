@@ -1,0 +1,70 @@
+2026-11-17T00:20:13-0300 [INFO] [provisionar.sh] Execução 20261117002013-1160 iniciada por root(sudo:aluno)
+2026-11-17T00:20:13-0300 [INFO] [provisionar.sh] ==> 02-aplicacao.sh
+2026-11-17T00:20:13-0300 [INFO] [02-aplicacao.sh] Execução 20261117002013-1160 iniciada por root(sudo:aluno)
+2026-11-17T00:20:13-0300 [INFO] [02-aplicacao.sh] ==> Dependências do sistema
+2026-11-17T00:20:13-0300 [INFO] [02-aplicacao.sh] Instalar pacotes: python3 python3-venv python3-pip postgresql postgresql-contrib nginx git rsync jq openssl stress-ng sysstat logrotate acl
+2026-11-17T00:20:21-0300 [OK] [02-aplicacao.sh] Instalar pacotes: python3 python3-venv python3-pip postgresql postgresql-contrib nginx git rsync jq openssl stress-ng sysstat logrotate acl (8s)
+2026-11-17T00:20:21-0300 [INFO] [02-aplicacao.sh] ==> Banco de dados
+2026-11-17T00:20:21-0300 [INFO] [02-aplicacao.sh] Iniciar PostgreSQL
+2026-11-17T00:20:22-0300 [OK] [02-aplicacao.sh] Iniciar PostgreSQL (1s)
+2026-11-17T00:20:22-0300 [INFO] [02-aplicacao.sh] Criar usuário e banco quorum
+2026-11-17T00:20:22-0300 [OK] [02-aplicacao.sh] Criar usuário e banco quorum (0s)
+2026-11-17T00:20:22-0300 [INFO] [02-aplicacao.sh] ==> Variáveis de ambiente
+2026-11-17T00:20:22-0300 [INFO] [02-aplicacao.sh] Gravar /etc/quorum/quorum.env (640, root:quorum)
+2026-11-17T00:20:22-0300 [OK] [02-aplicacao.sh] Gravar /etc/quorum/quorum.env (640, root:quorum) (0s)
+2026-11-17T00:20:22-0300 [INFO] [02-aplicacao.sh] ==> Código da aplicação
+2026-11-17T00:20:22-0300 [INFO] [02-aplicacao.sh] Baixar código de https://github.com/lorransantosdev/quorum-api.git (main)
+2026-11-17T00:20:23-0300 [OK] [02-aplicacao.sh] Baixar código de https://github.com/lorransantosdev/quorum-api.git (main) (1s)
+2026-11-17T00:20:23-0300 [INFO] [02-aplicacao.sh] Criar venv e instalar dependências Python
+2026-11-17T00:20:25-0300 [OK] [02-aplicacao.sh] Criar venv e instalar dependências Python (2s)
+2026-11-17T00:20:25-0300 [INFO] [02-aplicacao.sh] ==> Migrações
+2026-11-17T00:20:25-0300 [INFO] [02-aplicacao.sh] Aplicar migrações Alembic
+2026-11-17T00:20:26-0300 [OK] [02-aplicacao.sh] Aplicar migrações Alembic (1s)
+2026-11-17T00:20:26-0300 [INFO] [02-aplicacao.sh] ==> Serviço da aplicação
+2026-11-17T00:20:26-0300 [INFO] [02-aplicacao.sh] Instalar e iniciar quorum-api.service
+2026-11-17T00:20:26-0300 [OK] [02-aplicacao.sh] Instalar e iniciar quorum-api.service (0s)
+2026-11-17T00:20:26-0300 [INFO] [02-aplicacao.sh] Publicar API no nginx (api.quorum.local:80)
+2026-11-17T00:20:27-0300 [OK] [02-aplicacao.sh] Publicar API no nginx (api.quorum.local:80) (1s)
+2026-11-17T00:20:27-0300 [INFO] [02-aplicacao.sh] ==> Verificação
+2026-11-17T00:20:27-0300 [INFO] [02-aplicacao.sh] Checar http://api.quorum.local/health
+2026-11-17T00:20:29-0300 [OK] [02-aplicacao.sh] Checar http://api.quorum.local/health (2s)
+2026-11-17T00:20:29-0300 [OK] [02-aplicacao.sh] Documentação: http://api.quorum.local/docs
+2026-11-17T00:20:29-0300 [OK] [02-aplicacao.sh] Aplicação Quorum publicada
+2026-11-17T00:20:30-0300 [INFO] [provisionar.sh] ==> Estado final
+
+== Servidor ==
+Hostname:   quorum-srv01  (quorum-srv01.quorum.local)
+Sistema:    Ubuntu 24.04 LTS | kernel 6.6.87.2-microsoft-standard-WSL2
+Ligado em:  2026-11-17 00:16:13
+Fuso:       -03 America/Sao_Paulo
+
+== Rede e DNS ==
+eth0             UP             172.19.249.236/20 10.77.0.10/24 
+Rota padrão: default via 172.19.240.1 dev eth0 proto kernel 
+nameserver 127.0.0.53
+search quorum.local
+api.quorum.local         -> 10.77.0.10
+quorum-srv01.quorum.local -> 127.0.1.1
+db.quorum.local          -> 127.0.0.1
+
+== Serviços ==
+quorum-rede      ativo=active    boot=enabled   reinícios=0
+quorum-api       ativo=active    boot=enabled   reinícios=0
+quorum-monitor   ativo=active    boot=enabled   reinícios=0
+postgresql       ativo=active    boot=enabled   reinícios=0
+nginx            ativo=active    boot=enabled   reinícios=0
+
+== API ==
+GET http://api.quorum.local/health -> HTTP 200 em 0.008824s
+{"status":"ok","banco":"ok"}
+
+== Recursos agora ==
+2026-11-17T00:20:32-0300 NORMAL :: CPU 1% [NORMAL] | Memória 10% [NORMAL] | Disco /=1% | API ok
+
+== Últimos alertas ==
+2026-11-17T00:14:17-0300 | FALHA    | svc:quorum-api | serviço inactive
+2026-11-17T00:14:22-0300 | RECUPERADO | svc:quorum-api | serviço reiniciado pelo monitor
+2026-11-17T00:16:17-0300 | FALHA    | svc:quorum-api | serviço inactive
+2026-11-17T00:16:21-0300 | RECUPERADO | svc:quorum-api | serviço reiniciado pelo monitor
+2026-11-17T00:20:26-0300 | FALHA    | api:saude    | falha 1/3 em http://api.quorum.local/health: curl: (22) The requested URL returned error: 502
+2026-11-17T00:20:32-0300 [OK] [provisionar.sh] Provisionamento 20261117002013-1160 concluído em 19s

@@ -1,0 +1,47 @@
+$ id quorum
+uid=999(quorum) gid=989(quorum) groups=989(quorum)
+
+$ getent group quorum-ops
+quorum-ops:x:1003:aluno
+
+$ ls -ld /opt/quorum /opt/quorum/app /opt/quorum/venv /etc/quorum /var/log/quorum
+drwxr-x--- 2 root   quorum     4096 Nov 17 00:20 /etc/quorum
+drwxr-x--- 5 quorum quorum     4096 Nov 17 00:08 /opt/quorum
+drwxr-x--- 8 quorum quorum     4096 Nov 17 00:20 /opt/quorum/app
+drwxr-x--- 5 quorum quorum     4096 Nov 17 00:08 /opt/quorum/venv
+drwxrwsr-x 2 root   quorum-ops 4096 Nov 17 00:08 /var/log/quorum
+
+$ ls -l /etc/quorum /var/log/quorum
+/etc/quorum:
+total 8
+-rw-r----- 1 root quorum-ops 995 Nov 17 00:08 quorum.conf
+-rw-r----- 1 root quorum     255 Nov 17 00:20 quorum.env
+
+/var/log/quorum:
+total 148
+-rw-rw-r-- 1 root   quorum-ops  2246 Nov 17 00:20 alertas.log
+-rw-rw-r-- 1 quorum quorum-ops  5347 Nov 17 00:20 api.log
+-rw-r----- 1 root   quorum-ops 15784 Nov 17 00:20 auditoria.log
+-rw-r--r-- 1 root   quorum-ops   520 Nov 17 00:20 dependencias-python.txt
+-rw-rw-r-- 1 root   quorum-ops  3340 Nov 17 00:20 instalacoes.log
+-rw-rw-r-- 1 root   quorum-ops  5928 Nov 17 00:20 monitor.log
+-rw-rw-r-- 1 root   quorum-ops 97463 Nov 17 00:20 provisionamento.log
+-rw-r--r-- 1 root   quorum-ops   970 Nov 17 00:14 testes-falha.log
+
+$ cat /etc/sudoers.d/quorum-ops
+%quorum-ops ALL=(root) NOPASSWD: /usr/bin/systemctl start quorum-*, /usr/bin/systemctl stop quorum-*, /usr/bin/systemctl restart quorum-*, /usr/bin/systemctl status quorum-*, /usr/bin/journalctl -u quorum-*
+
+$ ufw status verbose
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), deny (routed)
+New profiles: skip
+
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW IN    Anywhere                  
+80/tcp                     ALLOW IN    Anywhere                  
+22/tcp (v6)                ALLOW IN    Anywhere (v6)             
+80/tcp (v6)                ALLOW IN    Anywhere (v6)             
+
+

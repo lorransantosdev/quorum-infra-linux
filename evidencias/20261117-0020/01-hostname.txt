@@ -1,0 +1,24 @@
+$ hostnamectl 2>/dev/null || hostname
+ Static hostname: quorum-srv01
+       Icon name: computer-container
+         Chassis: container ☐
+      Machine ID: 45d7989d69114323a33efdc162028938
+         Boot ID: fd8ba7e46195434e904a815f3287f6f1
+  Virtualization: wsl
+Operating System: Ubuntu 24.04 LTS
+          Kernel: Linux 6.6.87.2-microsoft-standard-WSL2
+    Architecture: x86-64
+
+$ cat /etc/hostname
+quorum-srv01
+
+$ hostname -f
+quorum-srv01.quorum.local
+
+$ sed -n '/>>> quorum/,/<<< quorum/p' /etc/hosts
+# >>> quorum (gerenciado por 01-infraestrutura.sh)
+127.0.1.1   quorum-srv01.quorum.local quorum-srv01
+10.77.0.10  api.quorum.local
+127.0.0.1   db.quorum.local
+# <<< quorum
+

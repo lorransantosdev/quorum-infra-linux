@@ -194,7 +194,7 @@ notificar_systemd() {
 
 modo_servico() {
     trap 'registrar "$LOG_MONITOR" INFO monitor "sinal de parada recebido (ciclo $CICLO)"; exit 0' TERM INT
-    registrar "$LOG_MONITOR" INFO monitor "monitor iniciado pid=$$ intervalo=${MONITOR_INTERVALO}s boot=$(date -d "$(ps -o lstart= -p 1)" '+%Y-%m-%d %H:%M:%S')"
+    registrar "$LOG_MONITOR" INFO monitor "monitor iniciado pid=$$ intervalo=${MONITOR_INTERVALO}s boot=$(date -d "$(ps -o lstart= -p 1 2>/dev/null)" '+%Y-%m-%d %H:%M:%S')"
     logger -t quorum-monitor -p user.notice "monitor iniciado pid=$$" 2>/dev/null || true
     notificar_systemd --ready
     while true; do
