@@ -77,7 +77,7 @@ uso_discos() {
 
 maiores_processos() {
     local campo="$1"
-    ps -eo comm,pid,%cpu,%mem --sort=-"$campo" | awk 'NR>1 && NR<=4 {printf "%s(pid %s cpu %s%% mem %s%%) ", $1, $2, $3, $4}'
+    ps -eo comm,pid,%cpu,%mem --sort=-"$campo" 2>/dev/null | awk 'NR>1 && NR<=4 {printf "%s(pid %s cpu %s%% mem %s%%) ", $1, $2, $3, $4}'
 }
 
 avaliar() {
